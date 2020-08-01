@@ -1,64 +1,66 @@
-console.log('%c HI', 'color: firebrick')
-
 function fetchImages() {
     return fetch('https://dog.ceo/api/breeds/image/random/4')
     .then(resp => resp.json())
-    .then(json => renderImages(json));
+    .then(json => json.message.forEach(img => addImage(img)));
 }
   
-function renderImages(json) {
+function addImage(img) {
     const main = document.getElementById('dog-image-container')
-    const imgs = json.message
-    imgs.forEach(pic => {
-      const p = document.createElement("p")
-      p.innerHTML = `<img src=${pic}>`
-      main.appendChild(p)
-    })
+    const newImgEl = document.createElement('img');
+    newImgEl.src = img;
+    main.appendChild(newImgEl);
 }
 
 function fetchBreeds() {
     return fetch('https://dog.ceo/api/breeds/list/all')
     .then(resp => resp.json())
-    .then(json => renderBreeds(json));
+    .then(results => {
+        breeds = Object.keys(results.message);
+        renderBreeds(breeds);
+        addBreedSelectListener();
+    });
 }
 
-function renderBreeds(json) {
+function renderBreeds(breeds) {
     const ul = document.getElementById('dog-breeds')
-    const breeds = json.message
-    Object.keys(breeds).forEach(key => {
-      const li = document.createElement("li")
-      li.innerHTML = `${key}`
-      ul.appendChild(li)
-    })
+    removeChildren(ul);
+    breeds.forEach(breed => addBreed(breed))
 }
 
-function filterBreeds() {
-    let dropDown = document.getElementById("breed-dropdown")
-    dropDown.onchange = function() {
-        let letter = dropDown.value;
-        let breedContainer = document.getElementById('dog-breeds');
-        let dogBreeds = breedContainer.querySelectorAll('li');
+function addBreed(breed) {
+    let ul = document.querySelector('#dog-breeds');
+    let li = document.createElement('li');
+    li.innerText = breed;
+    li.style.cursor = 'pointer';
+    ul.appendChild(li);
+    li.addEventListener('click', updateColor);
+}
 
-        const startsWithA = dogBreeds.filter((breed) => breed.innerText.startsWith("a"));
-        const startsWithB = dogBreeds.filter((breed) => breed.innerText.startsWith("b"));
-        const startsWithC = dogBreeds.filter((breed) => breed.innerText.startsWith("c"));
-        const startsWithD = dogBreeds.filter((breed) => breed.innerText.startsWith("d"));
+function updateColor(event) {
+    event.target.style.color = 'palevioletred';
+}
 
-        if (letter == "a"){
-            startsWithA.forEach(dog =>
-                breedContainer.innerHTML += `<li>${dog.innerText}</li>`)
-        }
+function addBreedSelectListener() {
+    let breedDropdown = document.querySelector('#breed-dropdown');
+    breedDropdown.addEventListener('change', function (event) {
+    selectBreedsStartingWith(event.target.value);
+  });
+}
 
+function selectBreedsStartingWith(letter) {
+    renderBreeds(breeds.filter(breed => breed.startsWith(letter)));
+}
 
+function removeChildren(el) {
+    let child = el.lastElementChild;
+    while (child) {
+        el.removeChild(child)
+        child = el.lastElementChild;
     }
-
-
 }
 
-document.querySelectorAll('li').forEach(li => li.addEventListener('click', _ => li.style.color = 'red'));
-  
+
 document.addEventListener('DOMContentLoaded', function() {
     fetchImages();
     fetchBreeds();
-    filterBreeds()
 })

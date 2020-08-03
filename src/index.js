@@ -21,14 +21,16 @@ function renderAll() {
     const breedUrl = 'https://dog.ceo/api/breeds/list/all';
     fetch(breedUrl)
         .then(resp => resp.json())
-        .then(result =>result.message.forEach(index => addBreed(index))); 
+        .then(result =>{
+       
+            breeds = Object.keys(result.message).forEach(breed => addBreed(breed))
+            }); 
 };
 
 function addBreed(breed) {
-    let list = document.getElementById('dog-breeds')
+    let list = document.getElementById('dog-breeds');
     let li = document.createElement('li');
-    li.li = breed
+    li.li = breed;
     list.appendChild(li);
-    
 }
 

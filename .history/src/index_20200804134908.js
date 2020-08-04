@@ -44,10 +44,9 @@ let liColor = () => {
     let ul = document.getElementById('dog-breeds');
     ul.addEventListener('click', (e) => {
         let lis = ul.children;
-        let firstLetter = e.target.textContent[0];
-        // debugger;
+        let firstLetter = e.target.value.startsWith;
         for (let i = 0; i < lis.length; i++) {
-            if(lis[i].textContent.startsWith(firstLetter)){
+            if(lis[i].startsWith == firstLetter){
                 lis[i].style.color = 'red';
             } else {
                 lis[i].style.color = 'black';

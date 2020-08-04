@@ -6,7 +6,6 @@ document.addEventListener('DOMContentLoaded',function(){
     fetchImage();
     fetchBreeds();
     dd();   
-    liColor();
 });
 
 function fetchImage(){
@@ -41,20 +40,8 @@ function renderBreeds(breeds) {
 }
 
 let liColor = () => {
-    let ul = document.getElementById('dog-breeds');
-    ul.addEventListener('click', (e) => {
-        let lis = ul.children;
-        let firstLetter = e.target.textContent[0];
-        // debugger;
-        for (let i = 0; i < lis.length; i++) {
-            if(lis[i].textContent.startsWith(firstLetter)){
-                lis[i].style.color = 'red';
-            } else {
-                lis[i].style.color = 'black';
-            }
-        };
-    })
-   
+    let ul = document.getElementById('ul');
+
 }
 
 let dd = () =>{

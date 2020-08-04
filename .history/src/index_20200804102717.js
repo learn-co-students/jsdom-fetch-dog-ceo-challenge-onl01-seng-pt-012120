@@ -6,13 +6,18 @@ document.addEventListener('DOMContentLoaded',function(){
     fetchImage();
     fetchBreeds();
     dd();   
-    liColor();
 });
 
 function fetchImage(){
     return fetch(imgUrl)
     .then(resp => resp.json())
     .then(json => renderImages(json));
+};
+
+function fetchBreeds(){
+    return fetch(breedUrl)
+    .then(resp => resp.json())
+    .then(json => renderBreeds(json));
 };
 
 function renderImages(pics) {
@@ -22,12 +27,6 @@ function renderImages(pics) {
         img.src = pic
         dogImgCont.appendChild(img);
     });
-};
-
-function fetchBreeds(){
-    return fetch(breedUrl)
-    .then(resp => resp.json())
-    .then(json => renderBreeds(json));
 };
 
 function renderBreeds(breeds) {
@@ -40,45 +39,44 @@ function renderBreeds(breeds) {
     })
 }
 
-let liColor = () => {
-    let ul = document.getElementById('dog-breeds');
-    ul.addEventListener('click', (e) => {
-        let lis = ul.children;
-        let firstLetter = e.target.textContent[0];
-        // debugger;
-        for (let i = 0; i < lis.length; i++) {
-            if(lis[i].textContent.startsWith(firstLetter)){
-                lis[i].style.color = 'red';
-            } else {
-                lis[i].style.color = 'black';
-            }
-        };
-    })
-   
-}
-
 let dd = () =>{
     let dropDown = document.querySelector('#breed-dropdown');
     dropDown.addEventListener('click', (e) => {
         let lis = document.getElementsByTagName('li');
         if (e.target.value == 'a') {
             for (let i = 0; i < lis.length; i++) {
-                lis[i].textContent.startsWith('a') ? lis[i].hidden = false : lis[i].hidden = true;
+                if (lis[i].textContent.startsWith('a')) {
+                    lis[i].hidden = false;
+                } else {
+                    lis[i].hidden = true;
+                };
             };
         };
         if (e.target.value == 'b') {
             for (let i = 0; i < lis.length; i++) {
-                lis[i].textContent.startsWith('b') ? lis[i].hidden = false : lis[i].hidden = true;
+                if (lis[i].textContent.startsWith('b')) {
+                    lis[i].hidden = false;
+                } else {
+                    lis[i].hidden = true;
+                };
             };
         };
         if (e.target.value == 'c') {
             for (let i = 0; i < lis.length; i++) {
-                lis[i].textContent.startsWith('c') ? lis[i].hidden = false : lis[i].hidden = true;
+                if (lis[i].textContent.startsWith('c')) {
+                    lis[i].hidden = false;
+                } else {
+                    lis[i].hidden = true;
+                };
             };
         };
         if (e.target.value == 'd') {
             for (let i = 0; i < lis.length; i++) {
-                lis[i].textContent.startsWith('d') ? lis[i].hidden = false : lis[i].hidden = true;
+                if (lis[i].textContent.startsWith('d')) {
+                    lis[i].hidden = false;
+                } else {
+                    lis[i].hidden = true;
+                };
             };
         };
     });

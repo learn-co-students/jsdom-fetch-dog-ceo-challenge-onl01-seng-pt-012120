@@ -45,7 +45,7 @@ let liColor = () => {
     ul.addEventListener('click', (e) => {
         let lis = ul.children;
         let firstLetter = e.target.textContent[0];
-        // debugger;
+        debugger;
         for (let i = 0; i < lis.length; i++) {
             if(lis[i].textContent.startsWith(firstLetter)){
                 lis[i].style.color = 'red';
